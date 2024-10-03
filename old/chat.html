@@ -1,0 +1,107 @@
+<head>
+    <script src="https://api-maps.yandex.ru/v3/?apikey=2e6dd6ab-814c-44fc-86a3-2b81fb30751c&lang=ru_RU"></script>
+    <!--<script src="yandex.js"></script>-->
+            <script src="js/map.js"></script>
+            <link href="css/map.css" rel="stylesheet" type="text/css"/>
+
+<!-- Chatra {literal} -->
+<script>
+  window.ChatraSetup = {
+    mode: 'frame',
+    injectTo: 'chatra-wrapper'
+   //colors: {
+     //   buttonText: 'green', /* chat button text/icon color */
+       // buttonBg: 'green', /* chat button background color */
+        //clientBubbleBg: 'green', /* visitor’s message bubble color */
+        //agentBubbleBg: 'green' /* agent’s message bubble color */
+    // }
+};
+  (function(d, w, c) {
+      w.ChatraID = 'gMWmHHHshj6syB2Sv';
+      var s = d.createElement('script');
+      w[c] = w[c] || function() {
+          (w[c].q = w[c].q || []).push(arguments);
+      };
+      s.async = true;
+      s.src = 'https://call.chatra.io/chatra.js';
+      if (d.head) d.head.appendChild(s);
+  })(document, window, 'Chatra');
+  Chatra('setColors', {
+    chatBg: '#17212b' // фон
+});
+</script>
+<!-- /Chatra {/literal} -->
+
+</head>
+
+<body>
+  <center>
+    <img class="ya" src="img/yar1.png">
+   <img class="mark" src="img/mark2.png">
+
+
+<h3  style="font-family: 'Roboto', sans-serif;color: white;">Простота и мастерство в каждой детали</h3>
+
+
+<div id="map" style="height:44vh;" style="display:none;"></div>
+
+
+
+
+  <div id="chatra-wrapper"  style="background:#17212b;border-radius:30px;height:40vh;max-height: 680px;width:100%;"></div>
+
+
+
+
+
+
+
+
+<!--
+  <button class="collapsible">Как это работает</button>
+<div class="content">
+  <video  width="100%" preload="auto" no-controls autoplay loop playsinline muted >
+    <source src="img/ya.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <video  width="100%" preload="auto" no-controls autoplay loop playsinline muted >
+    <source src="img/v.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+
+</div>
+
+-->
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
+
+
+<!--<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A8e26a4eed3fa8299471fef32d36aaedddfbea43804fc0c31aea0e585451e6d12&amp;width=100%25&amp;height=577&amp;lang=ru_RU&amp;scroll=true"></script>
+-->
+
+<!--
+<iframe src="https://yandex.ru/business/widget/request/company/122204647852" style="height: 47vh;width: 99.5%;"></iframe>
+-->
+
+
+</center>
+
+</body>
