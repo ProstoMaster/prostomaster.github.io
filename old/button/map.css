@@ -1,0 +1,124 @@
+
+/*@import "https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css";*/
+body{font-family: 'Roboto', sans-serif;background-color: #17212b;margin: 0;
+    /*background: radial-gradient(farthest-side ellipse at 10% 0, transparent 20%, #17193B);*/}
+    ::-webkit-scrollbar {
+        width: 0;
+               }
+.ya{width: 4vh;padding-right: 17px;} .mark{width: 4vh;padding-left: 17px;}
+.rotateImg {
+    transition: transform 0.5s ease;
+}
+
+.rotateImg:hover {
+    transform: rotate(90deg);
+}
+
+    .collapsible {
+       background-color: transparent;
+        color: white;
+    cursor: pointer;
+    padding: 40px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    font-weight: 900;
+      }
+      
+      .active, .collapsible:hover {
+        background-color: #213657;
+      }
+      
+      .collapsible:after {
+        content: 'открыть';
+        color: white;
+        font-weight: bold;
+        float: right;
+        position: absolute;
+        margin-top: 50px;
+        margin-left: -62px;
+      }
+      
+      .active:after {
+        content: "Х";
+        margin-left: -50px;
+        color:transparent;
+      }
+      
+      .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out;
+        background-color: transparent;
+      }  
+    
+    
+    
+ 
+    .my-marker::after{
+content:'В работе'; font-size:4em;color:white;
+}
+
+
+
+
+.marker-class{    color: white;
+    background-color: white;
+    color: red;
+    position: relative;
+    top: 78px;
+    font-size: 1em;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 7px;}.marker-class-red{    color: white;
+    background-color: red;
+    color: white;
+   /* font-weight: 900; */
+    position: relative;
+    top: 78px;
+    font-size: 1em;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 7px;}
+    
+    .marker-class-top1{ 
+    background-color: white;
+    color: red;
+  /* font-weight: 900; */
+    position: relative;
+    top: 52px;
+    font-size: 1em;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 7px;}
+
+    .marker-class-top2{ 
+    background-color: red;
+    color: white;
+  /* font-weight: 900; */
+    position: relative;
+    top: 45px;
+    font-size: 1em;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 7px;}
+
+
+    .marker-class-top3  { 
+        background-color: white;
+        color: red;
+       /* font-weight: 900; */
+        position: relative;
+        top: 45px;
+        font-size: 1em;
+        width: 100%;
+        padding-left: 3px;
+        padding-right: 3px;
+        border-radius: 7px;}

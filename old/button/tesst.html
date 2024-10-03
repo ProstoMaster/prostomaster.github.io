@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ПМ</title>
+  <script src="https://api-maps.yandex.ru/v3/?apikey=2e6dd6ab-814c-44fc-86a3-2b81fb30751c&lang=ru_RU"></script>
+  <!--<script src="yandex.js"></script>-->
+          <script src="map.js"></script>
+          <link href="map.css" rel="stylesheet" type="text/css"/>
+          <link rel="stylesheet" href="style.css">
+<script>
+window.ChatraSetup = {
+  mode: 'frame',
+  injectTo: 'chatra-wrapper'
+
+};
+(function(d, w, c) {
+    w.ChatraID = 'gMWmHHHshj6syB2Sv';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+Chatra('setColors', {
+  chatBg: '#17212b' // фон
+});
+</script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<img src="img/cog.png" class="trigger"/>
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-button"></span>
+
+       <center> <iframe src="test.html" frameborder="0" style="width: 100%;height: 67vh;"></iframe> </center>
+    </div>
+</div>
+<!-- partial -->
+
+
+
+
+<center>
+<img class="ya" src="yar1.png">
+<img class="mark" src="mark2.png">
+
+
+<br><br>
+  
+  <img src="https://avatars.mds.yandex.net/get-lpc/10116223/ccb89be1-45db-4d44-93f8-00aef8a1d22a/orig" style="width: 8%;">
+
+
+  <!--<h3  style="font-family: 'Roboto', sans-serif;color: white;">Простота и мастерство</h3>-->
+
+
+<div id="map" style="height:44vh;" style="display:none;"></div>
+
+
+
+
+<div id="chatra-wrapper"  style="background:#17212b;border-radius:30px;height:40vh;max-height: 680px;width:100%;"></div>
+
+
+
+
+
+
+
+
+<!--
+<button class="collapsible">Как это работает</button>
+<div class="content">
+<video  width="100%" preload="auto" no-controls autoplay loop playsinline muted >
+  <source src="img/ya.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<video  width="100%" preload="auto" no-controls autoplay loop playsinline muted >
+  <source src="img/v.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+</div>
+
+-->
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+coll[i].addEventListener("click", function() {
+  this.classList.toggle("active");
+  var content = this.nextElementSibling;
+  if (content.style.maxHeight){
+    content.style.maxHeight = null;
+  } else {
+    content.style.maxHeight = content.scrollHeight + "px";
+  } 
+});
+}
+</script>
+
+
+  <script  src="./script.js"></script>
+</body>
+
+</html>
+
+  

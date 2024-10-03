@@ -1,0 +1,161 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>col</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+<style> ::-webkit-scrollbar {
+      width: 0;
+body{background-color: #17212b};
+}
+#result::after{
+content:'минут';
+  font-size:1em;
+}</style>
+</head>
+<body style="text-align: center;font-family: 'Roboto', sans-serif;">
+  <section class="section">
+    <div class="container">
+
+
+<div class="columns" style="display: flex;font-size: 2em;border-bottom: 3px solid white;">
+  <div class="column is-half " style="display: grid;/* border-left: 1.5px solid white; */">
+    <span style="color:green;/* border-right: 1.5px solid white; */">выполнено</span>
+  <span id="complete" style="
+    font-size: 3em;
+    font-weight:900;
+    border-right: 1.5px solid white;
+">?</span>
+
+<div style="color:#6c6c6c;">         
+<img src="mark3.png" style="
+    width: 22px;
+">
+  <span class="display-time-b" style="
+  font-size: .75em;
+">?</span> 
+
+</div> 
+
+    
+    </div>
+  <div class="column is-half" style="
+    display: grid;
+"> <span style="color:orange;">очередь</span>
+<span id="all" style="
+    font-size: 3em;
+    font-weight:900;
+    border-left: 1.5px solid white;
+    /* padding-left: 0px; */
+">?</span>
+    
+<div style="
+    color: #6c6c6c;
+">
+<img src="mark3.png" style="
+width: 22px;
+">
+  <span class="display-time-a" style="
+  font-size: .75em;
+">?</span>
+</div> 
+
+</div>
+</div>
+<div class="columns" style="display: flex;font-size: 2em;border-bottom: 3px solid white;">
+<div class="column" style="display: grid;">
+  <div class="column" title="Скорость, время и расстояние взаимосвязаны. Определение скорости, времени и расстояния + стоимость"><span style="color:orange;"><span style="color:white;">{</span> средняя <span style="color:green;"> заявка</span> <span style="color:white;">}</span> </span> </div>
+
+
+  <span id="result" style="
+    font-size: 3em;font-weight:900
+">?</span>
+
+ <!-- <span style="font-size: 1em;font-weight:900">минут</span> -->
+
+<div style="
+    color: #6c6c6c;
+">
+<img src="mark3.png" style="
+width: 22px;
+">
+
+
+  <span id="day">?</span>,
+  <span id="daynum">?</span>
+  <span id="month">?</span>
+  <span id="year">?</span>
+  <span class="display-time" style="
+  font-size: .75em;
+">?</span>
+</div> 
+</div>
+</div>
+
+
+
+
+
+<!--<div class="column" style="display: grid;">
+    <span style="color:#6c6c6c;font-size: 2em;">
+    <span style="color:white;">{</span> процесс <span style="color:green;"> </span> <span style="color:white;">}</span>
+  </span>
+  </div>-->
+
+  <div class="columns" style="display: flex;    border-bottom: 3px solid #6c6c6c;">
+  <div class="column">
+    <span style="color:transparent;background-color: green;border-radius: 50%;font-size: 1.5em;">11</span> 
+    <span style="color:green;font-size: 1.3em;">выполнено</span> 
+  </div>
+    <div class="column"> <img src="img/70.png" style="/*width: 25px;*/"></div>
+    <div class="column"> <img src="img/dist1.png" style="width: 150px;position: relative;top: 15px;"> </div>
+    <div class="column"> <img src="img/1.png" style="width: 40px;position: relative;/*top: -15px;*/">  </div>
+  </div>
+
+
+  <div class="columns" style="display: flex;    border-bottom: 3px solid #6c6c6c;">
+    <div class="column">
+      <span style="color:transparent;background-color: red;border-radius: 50%;font-size: 1.5em;">11</span>
+      <span style="color: red;font-size: 1.3em;">отказ</span>
+    </div>
+      <div class="column"> <img src="img/70.png" style="/*width: 25px;*/"></div>
+      <div class="column"> <img src="img/dist1.png" style="width: 150px;position: relative;top: 15px;"> </div>
+      <div class="column"> <img src="img/4.png" style="width: 60px;position: relative;/*top: -15px;*/">  </div>
+    </div>
+
+ 
+
+    <div class="columns" style="display: flex;border-bottom: 3px solid #6c6c6c;">
+      <div class="column">
+        <span style="color:transparent;background-color: green;border-radius: 50%;font-size: 1.5em;">11</span> 
+        <span style="color:green;font-size: 1.3em;">в пути</span> 
+      </div>
+        <div class="column"> <img src="img/70.png" style="/*width: 25px;*/"></div>
+        <div class="column"> <img src="img/dist1.png" style="width: 150px;position: relative;top: 15px;"> </div>
+        <div class="column"> <img src="img/2.png" style="width: 60px;position: relative;/*top: -15px;*/">  </div>
+      </div>
+
+
+
+
+      <div class="columns" style="display: flex; /*border-bottom: 3px solid #6c6c6c;*/">
+        <div class="column">
+          <span style="color:transparent;background-color: orange;border-radius: 50%;font-size: 1.5em;">11</span>
+          <span style="color: orange;font-size: 1.3em;">очередь</span>
+        </div>
+          <div class="column"> <img src="img/70.png" style="/*width: 25px;*/"></div>
+          <div class="column"> <img src="img/dist1.png" style="width: 150px;position: relative;top: 15px;"> </div>
+          <div class="column"> <img src="img/5.png" style="width: 60px;position: relative;/*top: -15px;*/">  </div>
+        </div>
+
+
+</div>
+</div>
+
+            
+  </section>
+
+  <script src="col.js"></script>
+  <script src="time.js"></script>
+
+</body>
+</html>
