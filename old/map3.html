@@ -1,0 +1,38 @@
+<html><head>
+  <head>
+    <title>Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/v3/?apikey=2e6dd6ab-814c-44fc-86a3-2b81fb30751c&lang=ru_RU"></script>
+    <script>
+        initMap();
+
+        async function initMap() {
+            await ymaps3.ready;
+
+            const {YMap, YMapDefaultSchemeLayer} = ymaps3;
+
+            const map = new YMap(
+                document.getElementById('map'),
+                {
+                    location: {
+                        center: [37.588144, 55.733842],
+                        zoom: 10
+                    }
+                }
+            );
+            
+
+           map.addChild(new YMapDefaultSchemeLayer({
+    theme: "dark", customization: []
+})); }
+
+      /**      map.addChild(new YMapDefaultSchemeLayer());
+        } **/
+    </script>
+  </head>
+
+  <body style="margin: 0;">
+   
+    <div id="map" style="width:100%;"></div>
+  </body>
+</html></body></html>
