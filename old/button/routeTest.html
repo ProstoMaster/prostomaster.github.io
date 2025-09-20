@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YMaps (Vanilla JS)</title>
+
+  <!-- Подключаем Yandex Maps JS API v3 (вставлен ваш ключ) -->
+  <script src="https://api-maps.yandex.ru/v3/?apikey=2e6dd6ab-814c-44fc-86a3-2b81fb30751c&lang=ru_RU" type="text/javascript"></script>
+
+  <style>
+    html,body { height:100%; margin:0; font-family: Arial, Helvetica, sans-serif; }
+    #map { width:100%; height:100vh; display:block; }
+    .panel {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      z-index: 2000;
+      background: rgba(255,255,255,0.95);
+      padding: 10px 12px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      font-size: 13px;
+    }
+    .panel b { display:block; margin-bottom:6px; }
+    .coords { font-family:monospace; margin-top:6px; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="panel" id="info">
+    <b>Построение маршрута (Vanilla ymaps3)</b>
+    Перетаскивайте маркеры, маршрут пересчитывается автоматически.
+    <div style="margin-top:8px">
+      <div>Точка A: <span id="ptA">—</span></div>
+      <div>Точка B: <span id="ptB">—</span></div>
+    </div>
+  </div>
+
+  <script>
+    (async function main() {
+      try {
+        // Ждём инициализации API
+        await ymaps3.ready;
+
+        // Импортировать нужные классы
+        const {
+          YMap,
+          YMapDefaultSchemeLayer,
+          YMapDefaultFeaturesLayer,
+          YMapControls,
+          YMapFeature
+        } = ymaps3;
+
+        // UI-элементы (маркер, zoom) берём из пакета default-ui-theme через ymaps3.import
+        const ui = await ymaps3.import('@yandex/ymaps3-default-ui-theme');
+        const { YMapDefaultMarker, YMapZoomControl } = ui;
+
+        // Начальные точки (взяты из примера Vue)
+        const INITIAL_ROUTE_POINTS = [
+          [37.620028, 55.741556], // [lng, lat] — точка A
+          [38.130492, 56.31112]   // точка B
+        ];
+
+        // Линия стиля маршрута
+        const lineStyle = {
+          fillRule: 'nonzero',
+          fill: '#333',
+          fillOpacity: 0.9,
+          stroke: [
+            { width: 6, color: '#007afce6' },
+            { width: 10, color: '#fff' }
+          ]
+        };
+
+        // Вспомогательная: координаты в строку
+        function coordsStr(c) {
+          return c.map(v => Number(v).toFixed(4)).join('; ');
+        }
+
+        // Создаём карту
+        const location = { center: [37.623082, 55.75254], zoom: 9 }; // стартовое положение
+        const map = new YMap(document.getElementById('map'), { location }, [
+          new YMapDefaultSchemeLayer(),
+          new YMapDefaultFeaturesLayer(),
+          new YMapControls({ position: 'right' }).addChild(new YMapZoomControl())
+        ]);
+
+        // Элементы UI для показа координат
+        const ptAEl = document.getElementById('ptA');
+        const ptBEl = document.getElementById('ptB');
+
+        // Текущие координаты
+        let pointACoords = INITIAL_ROUTE_POINTS[0].slice();
+        let pointBCoords = INITIAL_ROUTE_POINTS[1].slice();
+
+        // Маркеры A и B (включаем draggable и обработчики)
+        const markerA = new YMapDefaultMarker({
+          id: 'point-a',
+          coordinates: pointACoords,
+          title: 'Точка A',
+          subtitle: coordsStr(pointACoords),
+          draggable: true,
+          onDragMove: (newCoords) => {
+            // Обновляем подпись пока тянем
+            markerA.updateProps({ subtitle: coordsStr(newCoords) });
+          },
+          onDragEnd: async (newCoords) => {
+            pointACoords = newCoords;
+            ptAEl.textContent = coordsStr(pointACoords);
+            // После окончания перетаскивания — пересчитать маршрут
+            await computeAndShowRoute(pointACoords, pointBCoords);
+          }
+        });
+
+        const markerB = new YMapDefaultMarker({
+          id: 'point-b',
+          coordinates: pointBCoords,
+          title: 'Точка B',
+          subtitle: coordsStr(pointBCoords),
+          draggable: true,
+          onDragMove: (newCoords) => {
+            markerB.updateProps({ subtitle: coordsStr(newCoords) });
+          },
+          onDragEnd: async (newCoords) => {
+            pointBCoords = newCoords;
+            ptBEl.textContent = coordsStr(pointBCoords);
+            await computeAndShowRoute(pointACoords, pointBCoords);
+          }
+        });
+
+        // Добавляем маркеры на карту
+        map.addChild(markerA);
+        map.addChild(markerB);
+
+        // Обновляем начальные подписи
+        ptAEl.textContent = coordsStr(pointACoords);
+        ptBEl.textContent = coordsStr(pointBCoords);
+
+        // Переменная для линии маршрута (если уже есть, удалим перед добавлением новой)
+        let routeFeatureEntity = null;
+
+        // Функция получения маршрута через ymaps3.route(...)
+        async function fetchRoute(startCoords, endCoords) {
+          // IMPORTANT: для работы ymaps3.route требуется, чтобы ваш API-ключ имел сервис router/distance matrix включён
+          // и (возможно) быть настроен Restriction by HTTP Referer в кабинете разработчика.
+          const routes = await ymaps3.route({
+            points: [startCoords, endCoords],
+            type: 'driving', // driving | walking | cycling (если доступно)
+            bounds: true
+          });
+
+          if (!routes || !routes[0]) return null;
+          const firstRoute = routes[0].toRoute();
+          if (!firstRoute || !firstRoute.geometry || firstRoute.geometry.coordinates.length === 0) return null;
+          return firstRoute;
+        }
+
+        // Показываем маршрут (линия) на карте
+        async function computeAndShowRoute(startCoords, endCoords) {
+          // Удаляем старую линию (если есть)
+          if (routeFeatureEntity) {
+            try { map.removeChild(routeFeatureEntity); } catch (e) { /* ignore */ }
+            routeFeatureEntity = null;
+          }
+
+          // Запрос маршрута
+          let routeFeature = null;
+          try {
+            routeFeature = await fetchRoute(startCoords, endCoords);
+          } catch (err) {
+            console.error('Ошибка при fetchRoute:', err);
+            alert('Ошибка запроса маршрута (см. консоль). Проверьте права API-ключа (router).');
+            return;
+          }
+
+          if (!routeFeature) {
+            alert('Маршрут не найден.');
+            return;
+          }
+
+          // Создаём и добавляем YMapFeature с геометрией LineString
+          // routeFeature имеет форму RouteFeature (с geometry, properties и т.д.), можно передать напрямую
+          const featureProps = {
+            // geometry из routeFeature
+            geometry: routeFeature.geometry,
+            // Добавляем стиль
+            style: lineStyle,
+            // Чтобы убрать взаимод/ность линии, можно отключать draggable (оставим false)
+            draggable: false
+          };
+
+          routeFeatureEntity = new YMapFeature(featureProps);
+          map.addChild(routeFeatureEntity);
+
+          // Если в свойствах маршрута есть bounds — поместим маршрут в видимую область
+          if (routeFeature.properties && routeFeature.properties.bounds) {
+            // setLocation принимает bounds в виде [[lng1,lat1],[lng2,lat2]]
+            map.setLocation({ bounds: routeFeature.properties.bounds, duration: 300 });
+          }
+        }
+
+        // Построим начальный маршрут при старте
+        await computeAndShowRoute(pointACoords, pointBCoords);
+
+      } catch (e) {
+        console.error('Ошибка инициализации ymaps3:', e);
+        alert('Ошибка инициализации карты — проверьте консоль.');
+      }
+    })();
+  </script>
+</body>
+</html>
